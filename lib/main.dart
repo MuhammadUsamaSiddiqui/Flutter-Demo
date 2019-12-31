@@ -27,6 +27,8 @@ class MyFlutterApp extends StatelessWidget{  // the widget that will be returned
 }
 */
 
+// Section 2
+/*
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app_screens/home.dart';
 
@@ -108,4 +110,70 @@ Widget getListView() {
     Container(color: Colors.red, height: 50.0)
   ]);
   return listView;
+}*/
+
+// Stateful Widgets
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    title: "Section 3",
+    home: FavoriteCity(),
+  ));
+}
+
+class FavoriteCity extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _FavoriteCityState();
+  }
+}
+
+class _FavoriteCityState extends State<FavoriteCity> {
+  String nameCity = "";
+  var _currencies = ['Rupees', 'Dollars', 'Pounds', 'Other'];
+  var currentItemSelected = 'Rupees';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Stateful App Example"),
+        ),
+        body: Container(
+            margin: EdgeInsets.all(20.0),
+            child: Column(children: <Widget>[
+              TextField(
+                onSubmitted: (String userInput) {
+                  setState(() {
+                    nameCity = userInput;
+                  });
+                },
+              ),
+              DropdownButton<String>(
+                items: _currencies.map((String dropDowStringItem) {
+                  return DropdownMenuItem<String>(
+                    value: dropDowStringItem,
+                    child: Text(dropDowStringItem),
+                  );
+                }).toList(),
+                onChanged: (String newValueSelected) {
+                  // Code to execute, when a menu item is selected from drop down
+                  _onDropDownItemSelected(newValueSelected);
+                },
+                value: currentItemSelected,
+              ),
+              Padding(
+                  padding: EdgeInsets.all(30.0),
+                  child: Text("Your best city is $nameCity",
+                      style: TextStyle(fontSize: 20.0)))
+            ])));
+  }
+
+  void _onDropDownItemSelected(String newValueSelected) {
+    setState(() {
+      this.currentItemSelected = newValueSelected;
+    });
+  }
 }
